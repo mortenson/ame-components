@@ -1,0 +1,38 @@
+{
+  "name": "ame-components",
+  "version": "0.0.1",
+  "description": "Web components for the Ame Drupal distribution",
+  "main": "dist/collection/index.js",
+  "types": "dist/collection/index.d.ts",
+  "collection": "dist/collection/collection-manifest.json",
+  "files": [
+    "dist/"
+  ],
+  "browser": "dist/ame.js",
+  "scripts": {
+    "build": "stencil build",
+    "dev": "sd concurrent \"stencil build --dev --watch\" \"stencil-dev-server\" ",
+    "serve": "stencil-dev-server",
+    "start": "npm run dev"
+  },
+  "dependencies": {
+    "@stencil/core": "next",
+    "express": "^4.15.4",
+    "fs": "0.0.1-security",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "@stencil/dev-server": "latest",
+    "@stencil/utils": "latest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mortenson/ame-components.git"
+  },
+  "author": "Samuel Mortenson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mortenson/ame-components"
+  },
+  "homepage": "https://github.com/mortenson/ame-components"
+}
