@@ -1,0 +1,49 @@
+{
+  "components": [
+    {
+      "tag": "ame-text",
+      "componentClass": "AmeText",
+      "componentPath": "components/ame-text/ame-text.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/ame-text/ame-text.scss"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "editable",
+          "type": "boolean"
+        },
+        {
+          "name": "text"
+        }
+      ],
+      "states": [
+        {
+          "name": "editing"
+        }
+      ],
+      "listeners": [
+        {
+          "event": "click",
+          "method": "handleClick",
+          "passive": false,
+          "capture": false
+        }
+      ]
+    }
+  ],
+  "bundles": [
+    {
+      "components": [
+        "ame-text"
+      ]
+    }
+  ],
+  "compiler": {
+    "name": "@stencil/core",
+    "version": "0.0.6-4"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "namespace": "ame",
+  "components": [
+    [
+      "AME-TEXT",
+      "ame-text",
+      {
+        "$": "ame-text"
+      },
+      [
+        [
+          "editable",
+          1,
+          1
+        ],
+        [
+          "text",
+          1
+        ]
+      ],
+      [
+        [
+          "click",
+          "handleClick"
+        ]
+      ]
+    ]
+  ],
+  "loader": "ame.js",
+  "core": "ame/ame.core.js",
+  "corePolyfilled": "ame/ame.core.pf.js"
+}
