@@ -1,5 +1,4 @@
-import { Component, Prop } from '@stencil/core';
-
+import { Component, Prop, State, Listen } from '@stencil/core';
 
 @Component({
   tag: 'ame-text',
@@ -9,9 +8,21 @@ export class AmeText {
 
   @Prop() text: string;
 
+  @Prop() editable: boolean;
+
+  @State() editing: boolean;
+
+  @Listen('click')
+  handleClick(event: MouseEvent) {
+    if (this.editable && !this.editing) {
+      this.editing = true;
+    }
+  }
+
   render() {
     return (
-      <p>{this.text}</p>
+      <span contenteditable={this.editing ? "true" : "false"}>{this.text}</span>
     );
   }
+
 }
