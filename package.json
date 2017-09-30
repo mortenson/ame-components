@@ -16,7 +16,7 @@
     "start": "npm run dev"
   },
   "dependencies": {
-    "@stencil/core": "next",
+    "@stencil/core": "0.0.6-4",
     "express": "^4.15.4",
     "fs": "0.0.1-security",
     "path": "^0.12.7"

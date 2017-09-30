@@ -27,7 +27,8 @@ declare global {
   namespace JSXElements {
       export interface AmeTextAttributes extends HTMLAttributes {
         
-          text?: any
+          text?: any,
+          editable?: boolean | "true" | "false"
       }
   }
 }
