@@ -7,17 +7,19 @@ var AmeText = /** @class */ (function () {
     AmeText.prototype.value = function () {
         return this.editedText;
     };
+    AmeText.prototype.getChild = function () {
+        return this.element.querySelector('span');
+    };
     AmeText.prototype.handleClick = function (event) {
         if (this.editable) {
-            var child = this.element.querySelector('span');
+            var child = this.getChild();
             child.setAttribute('contenteditable', 'true');
             child.focus();
         }
     };
     AmeText.prototype.handleBlur = function (event) {
         if (this.editable) {
-            var child = this.element.querySelector('span');
-            child.innerHTML = this.editedText = child.innerText;
+            this.editedText = this.getChild().innerText;
         }
     };
     AmeText.prototype.handleKeyDown = function (event) {
@@ -26,8 +28,7 @@ var AmeText = /** @class */ (function () {
         }
     };
     AmeText.prototype.render = function () {
-        var text = this.editedText || this.text;
-        return (h("span", { "o": { "click": this.handleClick.bind(this), "blur": this.handleBlur.bind(this), "keydown": this.handleKeyDown.bind(this) }, "a": { "contenteditable": this.editable ? 'true' : 'false' } }, text));
+        return (h("span", { "o": { "click": this.handleClick.bind(this), "blur": this.handleBlur.bind(this), "keydown": this.handleKeyDown.bind(this) }, "a": { "contenteditable": this.editable ? 'true' : 'false' } }, this.editedText || this.text));
     };
     return AmeText;
 }());

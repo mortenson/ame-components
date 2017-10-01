@@ -24,9 +24,13 @@ export class AmeText {
     return this.editedText;
   }
 
+  getChild() {
+    return this.element.querySelector('span');
+  }
+
   handleClick(event: MouseEvent) {
     if (this.editable) {
-      let child = this.element.querySelector('span');
+      let child = this.getChild();
       child.setAttribute('contenteditable', 'true');
       child.focus();
     }
@@ -34,8 +38,7 @@ export class AmeText {
 
   handleBlur(event: FocusEvent) {
     if (this.editable) {
-      let child = this.element.querySelector('span');
-      child.innerHTML = this.editedText = child.innerText;
+      this.editedText = this.getChild().innerText;
     }
   }
 
@@ -46,13 +49,12 @@ export class AmeText {
   }
 
   render() {
-    let text = this.editedText || this.text;
     return (
       <span contenteditable={this.editable ? 'true' : 'false'}
             onClick={this.handleClick.bind(this)}
             onBlur={this.handleBlur.bind(this)}
             onKeyDown={this.handleKeyDown.bind(this)}
-      >{text}</span>
+      >{this.editedText || this.text}</span>
     );
   }
 

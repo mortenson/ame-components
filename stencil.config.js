@@ -3,7 +3,7 @@ exports.config = {
   generateDistribution: true,
   generateWWW: true,
   bundles: [
-    { components: ['ame-text', 'ame-edit'] }
+    { components: ['ame-text', 'ame-edit', 'ame-revert'] }
   ]
 };
 

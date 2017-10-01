@@ -32,6 +32,30 @@ var AmeEdit = /** @class */ (function () {
     return AmeEdit;
 }());
 
+var AmeRevert = /** @class */ (function () {
+    function AmeRevert() {
+    }
+    AmeRevert.prototype.getRevertableElements = function () {
+        var revertable = [];
+        var elements = document.body.querySelectorAll('*');
+        for (var i = 0; i < elements.length; ++i) {
+            if ('revert' in elements[i]) {
+                revertable.push(elements[i]);
+            }
+        }
+        return revertable;
+    };
+    AmeRevert.prototype.handleClick = function (event) {
+        this.getRevertableElements().forEach(function (element) {
+            element.revert();
+        });
+    };
+    AmeRevert.prototype.render = function () {
+        return (h("button", 0, t("Revert")));
+    };
+    return AmeRevert;
+}());
+
 var AmeText = /** @class */ (function () {
     function AmeText() {
     }
@@ -41,17 +65,19 @@ var AmeText = /** @class */ (function () {
     AmeText.prototype.value = function () {
         return this.editedText;
     };
+    AmeText.prototype.getChild = function () {
+        return this.element.querySelector('span');
+    };
     AmeText.prototype.handleClick = function (event) {
         if (this.editable) {
-            var child = this.element.querySelector('span');
+            var child = this.getChild();
             child.setAttribute('contenteditable', 'true');
             child.focus();
         }
     };
     AmeText.prototype.handleBlur = function (event) {
         if (this.editable) {
-            var child = this.element.querySelector('span');
-            child.innerHTML = this.editedText = child.innerText;
+            this.editedText = this.getChild().innerText;
         }
     };
     AmeText.prototype.handleKeyDown = function (event) {
@@ -60,13 +86,13 @@ var AmeText = /** @class */ (function () {
         }
     };
     AmeText.prototype.render = function () {
-        var text = this.editedText || this.text;
-        return (h("span", { "o": { "click": this.handleClick.bind(this), "blur": this.handleBlur.bind(this), "keydown": this.handleKeyDown.bind(this) }, "a": { "contenteditable": this.editable ? 'true' : 'false' } }, text));
+        return (h("span", { "o": { "click": this.handleClick.bind(this), "blur": this.handleBlur.bind(this), "keydown": this.handleKeyDown.bind(this) }, "a": { "contenteditable": this.editable ? 'true' : 'false' } }, this.editedText || this.text));
     };
     return AmeText;
 }());
 
 exports['AME-EDIT'] = AmeEdit;
+exports['AME-REVERT'] = AmeRevert;
 exports['AME-TEXT'] = AmeText;
 },
 
@@ -82,6 +108,19 @@ exports['AME-TEXT'] = AmeText;
 ],
 
 /** ame-edit: host **/
+{}
+
+],
+
+/***************** ame-revert *****************/
+[
+/** ame-revert: tag **/
+"AME-REVERT",
+
+/** ame-revert: members **/
+0 /* no members */,
+
+/** ame-revert: host **/
 {}
 
 ],

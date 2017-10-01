@@ -26,6 +26,26 @@
       ]
     },
     {
+      "tag": "ame-revert",
+      "componentClass": "AmeRevert",
+      "componentPath": "components/ame-revert/ame-revert.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/ame-revert/ame-revert.scss"
+          ]
+        }
+      },
+      "listeners": [
+        {
+          "event": "click",
+          "method": "handleClick",
+          "passive": false,
+          "capture": false
+        }
+      ]
+    },
+    {
       "tag": "ame-text",
       "componentClass": "AmeText",
       "componentPath": "components/ame-text/ame-text.js",
@@ -67,6 +87,7 @@
     {
       "components": [
         "ame-edit",
+        "ame-revert",
         "ame-text"
       ]
     }

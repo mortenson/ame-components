@@ -31,6 +31,33 @@ declare global {
   }
 }
 
+import { AmeRevert as AmeRevert } from './components/ame-revert/ame-revert';
+
+interface HTMLAmeRevertElement extends AmeRevert, HTMLElement {
+}
+declare var HTMLAmeRevertElement: {
+  prototype: HTMLAmeRevertElement;
+  new (): HTMLAmeRevertElement;
+};
+declare global {
+  interface HTMLElementTagNameMap {
+      "ame-revert": HTMLAmeRevertElement;
+  }
+  interface ElementTagNameMap {
+      "ame-revert": HTMLAmeRevertElement;
+  }
+  namespace JSX {
+      interface IntrinsicElements {
+          "ame-revert": JSXElements.AmeRevertAttributes;
+      }
+  }
+  namespace JSXElements {
+      export interface AmeRevertAttributes extends HTMLAttributes {
+        
+      }
+  }
+}
+
 import { AmeText as AmeText } from './components/ame-text/ame-text';
 
 interface HTMLAmeTextElement extends AmeText, HTMLElement {
