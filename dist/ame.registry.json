@@ -16,18 +16,20 @@
       ]
     ],
     [
-      "AME-REVERT",
+      "AME-RICH-TEXT",
       "ame-edit",
       {
         "$": "ame-edit"
       },
-      0,
       [
         [
-          "click",
-          "handleClick"
+          "editable",
+          1,
+          1
         ]
-      ]
+      ],
+      0,
+      1
     ],
     [
       "AME-TEXT",
@@ -40,12 +42,10 @@
           "editable",
           1,
           1
-        ],
-        [
-          "text",
-          1
         ]
-      ]
+      ],
+      0,
+      1
     ]
   ],
   "loader": "ame.js",

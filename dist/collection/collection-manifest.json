@@ -26,24 +26,31 @@
       ]
     },
     {
-      "tag": "ame-revert",
-      "componentClass": "AmeRevert",
-      "componentPath": "components/ame-revert/ame-revert.js",
+      "tag": "ame-rich-text",
+      "componentClass": "AmeRichText",
+      "componentPath": "components/ame-rich-text/ame-rich-text.js",
       "styles": {
         "$": {
           "stylePaths": [
-            "components/ame-revert/ame-revert.scss"
+            "components/ame-rich-text/ame-rich-text.scss"
           ]
         }
       },
-      "listeners": [
+      "props": [
         {
-          "event": "click",
-          "method": "handleClick",
-          "passive": false,
-          "capture": false
+          "name": "editable",
+          "type": "boolean"
         }
-      ]
+      ],
+      "methods": [
+        {
+          "name": "value"
+        }
+      ],
+      "hostElement": {
+        "name": "element"
+      },
+      "slot": "hasSlots"
     },
     {
       "tag": "ame-text",
@@ -60,34 +67,24 @@
         {
           "name": "editable",
           "type": "boolean"
-        },
-        {
-          "name": "text"
-        }
-      ],
-      "states": [
-        {
-          "name": "editedText"
         }
       ],
       "methods": [
-        {
-          "name": "revert"
-        },
         {
           "name": "value"
         }
       ],
       "hostElement": {
         "name": "element"
-      }
+      },
+      "slot": "hasSlots"
     }
   ],
   "bundles": [
     {
       "components": [
         "ame-edit",
-        "ame-revert",
+        "ame-rich-text",
         "ame-text"
       ]
     }

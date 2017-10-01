@@ -31,29 +31,31 @@ declare global {
   }
 }
 
-import { AmeRevert as AmeRevert } from './components/ame-revert/ame-revert';
+import { AmeRichText as AmeRichText } from './components/ame-rich-text/ame-rich-text';
 
-interface HTMLAmeRevertElement extends AmeRevert, HTMLElement {
+interface HTMLAmeRichTextElement extends AmeRichText, HTMLElement {
 }
-declare var HTMLAmeRevertElement: {
-  prototype: HTMLAmeRevertElement;
-  new (): HTMLAmeRevertElement;
+declare var HTMLAmeRichTextElement: {
+  prototype: HTMLAmeRichTextElement;
+  new (): HTMLAmeRichTextElement;
 };
 declare global {
   interface HTMLElementTagNameMap {
-      "ame-revert": HTMLAmeRevertElement;
+      "ame-rich-text": HTMLAmeRichTextElement;
   }
   interface ElementTagNameMap {
-      "ame-revert": HTMLAmeRevertElement;
+      "ame-rich-text": HTMLAmeRichTextElement;
   }
   namespace JSX {
       interface IntrinsicElements {
-          "ame-revert": JSXElements.AmeRevertAttributes;
+          "ame-rich-text": JSXElements.AmeRichTextAttributes;
       }
   }
   namespace JSXElements {
-      export interface AmeRevertAttributes extends HTMLAttributes {
+      export interface AmeRichTextAttributes extends HTMLAttributes {
         
+          value?: any,
+          editable?: boolean | "true" | "false"
       }
   }
 }
@@ -81,9 +83,7 @@ declare global {
   namespace JSXElements {
       export interface AmeTextAttributes extends HTMLAttributes {
         
-          revert?: any,
           value?: any,
-          text?: any,
           editable?: boolean | "true" | "false"
       }
   }

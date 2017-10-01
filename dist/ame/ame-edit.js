@@ -32,38 +32,44 @@ var AmeEdit = /** @class */ (function () {
     return AmeEdit;
 }());
 
-var AmeRevert = /** @class */ (function () {
-    function AmeRevert() {
+var AmeRichText = /** @class */ (function () {
+    function AmeRichText() {
     }
-    AmeRevert.prototype.getRevertableElements = function () {
-        var revertable = [];
-        var elements = document.body.querySelectorAll('*');
-        for (var i = 0; i < elements.length; ++i) {
-            if ('revert' in elements[i]) {
-                revertable.push(elements[i]);
-            }
+    AmeRichText.prototype.value = function () {
+        return this.getChild().innerText;
+    };
+    AmeRichText.prototype.getChild = function () {
+        return this.element.querySelector('span');
+    };
+    AmeRichText.prototype.handleClick = function (event) {
+        if (this.editable) {
+            var child = this.getChild();
+            child.setAttribute('contenteditable', 'true');
+            child.focus();
         }
-        return revertable;
     };
-    AmeRevert.prototype.handleClick = function (event) {
-        this.getRevertableElements().forEach(function (element) {
-            element.revert();
-        });
+    AmeRichText.prototype.handleBlur = function (event) {
+        if (this.editable) {
+            this.getChild().innerHTML = this.getChild().innerText;
+        }
     };
-    AmeRevert.prototype.render = function () {
-        return (h("button", 0, t("Revert")));
+    AmeRichText.prototype.handleKeyDown = function (event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+        }
     };
-    return AmeRevert;
+    AmeRichText.prototype.render = function () {
+        return (h("span", { "o": { "click": this.handleClick.bind(this), "blur": this.handleBlur.bind(this), "keydown": this.handleKeyDown.bind(this) }, "a": { "contenteditable": this.editable ? 'true' : 'false' } },
+            h(0, 0)));
+    };
+    return AmeRichText;
 }());
 
 var AmeText = /** @class */ (function () {
     function AmeText() {
     }
-    AmeText.prototype.revert = function () {
-        this.editedText = this.text;
-    };
     AmeText.prototype.value = function () {
-        return this.editedText;
+        return this.getChild().innerText;
     };
     AmeText.prototype.getChild = function () {
         return this.element.querySelector('span');
@@ -77,7 +83,7 @@ var AmeText = /** @class */ (function () {
     };
     AmeText.prototype.handleBlur = function (event) {
         if (this.editable) {
-            this.editedText = this.getChild().innerText;
+            this.getChild().innerHTML = this.getChild().innerText;
         }
     };
     AmeText.prototype.handleKeyDown = function (event) {
@@ -86,13 +92,14 @@ var AmeText = /** @class */ (function () {
         }
     };
     AmeText.prototype.render = function () {
-        return (h("span", { "o": { "click": this.handleClick.bind(this), "blur": this.handleBlur.bind(this), "keydown": this.handleKeyDown.bind(this) }, "a": { "contenteditable": this.editable ? 'true' : 'false' } }, this.editedText || this.text));
+        return (h("span", { "o": { "click": this.handleClick.bind(this), "blur": this.handleBlur.bind(this), "keydown": this.handleKeyDown.bind(this) }, "a": { "contenteditable": this.editable ? 'true' : 'false' } },
+            h(0, 0)));
     };
     return AmeText;
 }());
 
 exports['AME-EDIT'] = AmeEdit;
-exports['AME-REVERT'] = AmeRevert;
+exports['AME-RICH-TEXT'] = AmeRichText;
 exports['AME-TEXT'] = AmeText;
 },
 
@@ -112,15 +119,19 @@ exports['AME-TEXT'] = AmeText;
 
 ],
 
-/***************** ame-revert *****************/
+/***************** ame-rich-text *****************/
 [
-/** ame-revert: tag **/
-"AME-REVERT",
+/** ame-rich-text: tag **/
+"AME-RICH-TEXT",
 
-/** ame-revert: members **/
-0 /* no members */,
+/** ame-rich-text: members **/
+[
+  [ "editable", /** prop **/ 1, /** type boolean **/ 1 ],
+  [ "element", /** element ref **/ 7 ],
+  [ "value", /** method **/ 6 ]
+],
 
-/** ame-revert: host **/
+/** ame-rich-text: host **/
 {}
 
 ],
@@ -133,10 +144,7 @@ exports['AME-TEXT'] = AmeText;
 /** ame-text: members **/
 [
   [ "editable", /** prop **/ 1, /** type boolean **/ 1 ],
-  [ "editedText", /** state **/ 5 ],
   [ "element", /** element ref **/ 7 ],
-  [ "revert", /** method **/ 6 ],
-  [ "text", /** prop **/ 1 ],
   [ "value", /** method **/ 6 ]
 ],
 

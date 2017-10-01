@@ -24,12 +24,17 @@
       margin: 0 auto;
     }
     .component {
-      background: #61c6ee;
+      background: #2ca7d8;;
       padding: 20px;
       margin-bottom: 10px;
     }
     .component h2 {
       margin-top: 0;
+    }
+    .component > h2,
+    .component > p {
+      font-weight: normal;
+      color: white;
     }
   </style>
 </head>
@@ -48,17 +53,17 @@
         </div>
       </div>
       <div class="component">
-        <h2>&lt;ame-revert&gt;</h2>
-        <p>A button that reverts changes for the page.</p>
-        <div class="component-demo">
-          <ame-revert></ame-revert>
-        </div>
-      </div>
-      <div class="component">
         <h2>&lt;ame-text&gt;</h2>
         <p>A plan text element that can be edited inline.</p>
         <div class="component-demo">
-          <ame-text text="If editing is enabled, click me!"></ame-text>
+          <ame-text>If editing is enabled, click me!</ame-text>
+        </div>
+      </div>
+      <div class="component">
+        <h2>&lt;ame-rich-text&gt;</h2>
+        <p>A rich text element that can be edited inline.</p>
+        <div class="component-demo">
+          <ame-rich-text>I can handle <b>rich text</b></ame-rich-text>
         </div>
       </div>
     </div>

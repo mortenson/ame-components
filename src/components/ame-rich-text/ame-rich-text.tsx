@@ -1,10 +1,10 @@
 import { Component, Prop, Element, Method } from '@stencil/core';
 
 @Component({
-  tag: 'ame-text',
-  styleUrl: 'ame-text.scss'
+  tag: 'ame-rich-text',
+  styleUrl: 'ame-rich-text.scss'
 })
-export class AmeText {
+export class AmeRichText {
 
   @Element() element: HTMLElement;
 
