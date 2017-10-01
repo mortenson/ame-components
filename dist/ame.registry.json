@@ -2,10 +2,24 @@
   "namespace": "ame",
   "components": [
     [
-      "AME-TEXT",
-      "ame-text",
+      "AME-EDIT",
+      "ame-edit",
       {
-        "$": "ame-text"
+        "$": "ame-edit"
+      },
+      0,
+      [
+        [
+          "click",
+          "handleClick"
+        ]
+      ]
+    ],
+    [
+      "AME-TEXT",
+      "ame-edit",
+      {
+        "$": "ame-edit"
       },
       [
         [

@@ -1,6 +1,31 @@
 {
   "components": [
     {
+      "tag": "ame-edit",
+      "componentClass": "AmeEdit",
+      "componentPath": "components/ame-edit/ame-edit.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/ame-edit/ame-edit.scss"
+          ]
+        }
+      },
+      "states": [
+        {
+          "name": "enabled"
+        }
+      ],
+      "listeners": [
+        {
+          "event": "click",
+          "method": "handleClick",
+          "passive": false,
+          "capture": false
+        }
+      ]
+    },
+    {
       "tag": "ame-text",
       "componentClass": "AmeText",
       "componentPath": "components/ame-text/ame-text.js",
@@ -41,6 +66,7 @@
   "bundles": [
     {
       "components": [
+        "ame-edit",
         "ame-text"
       ]
     }

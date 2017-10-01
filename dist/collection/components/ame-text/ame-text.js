@@ -16,12 +16,18 @@ var AmeText = /** @class */ (function () {
     };
     AmeText.prototype.handleBlur = function (event) {
         if (this.editable) {
-            this.editedText = this.element.querySelector('span').innerText;
+            var child = this.element.querySelector('span');
+            child.innerHTML = this.editedText = child.innerText;
+        }
+    };
+    AmeText.prototype.handleKeyDown = function (event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
         }
     };
     AmeText.prototype.render = function () {
         var text = this.editedText || this.text;
-        return (h("span", { "o": { "click": this.handleClick.bind(this), "blur": this.handleBlur.bind(this) } }, text));
+        return (h("span", { "o": { "click": this.handleClick.bind(this), "blur": this.handleBlur.bind(this), "keydown": this.handleKeyDown.bind(this) }, "a": { "contenteditable": this.editable ? 'true' : 'false' } }, text));
     };
     return AmeText;
 }());

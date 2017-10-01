@@ -34,14 +34,25 @@ export class AmeText {
 
   handleBlur(event: FocusEvent) {
     if (this.editable) {
-      this.editedText = this.element.querySelector('span').innerText;
+      let child = this.element.querySelector('span');
+      child.innerHTML = this.editedText = child.innerText;
+    }
+  }
+
+  handleKeyDown(event: KeyboardEvent) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
     }
   }
 
   render() {
-    const text = this.editedText || this.text;
+    let text = this.editedText || this.text;
     return (
-      <span onClick={this.handleClick.bind(this)} onBlur={this.handleBlur.bind(this)}>{text}</span>
+      <span contenteditable={this.editable ? 'true' : 'false'}
+            onClick={this.handleClick.bind(this)}
+            onBlur={this.handleBlur.bind(this)}
+            onKeyDown={this.handleKeyDown.bind(this)}
+      >{text}</span>
     );
   }
 

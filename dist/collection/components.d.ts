@@ -4,6 +4,33 @@
  * and imports for stencil collections that might be configured in your stencil.config.js file
  */
 
+import { AmeEdit as AmeEdit } from './components/ame-edit/ame-edit';
+
+interface HTMLAmeEditElement extends AmeEdit, HTMLElement {
+}
+declare var HTMLAmeEditElement: {
+  prototype: HTMLAmeEditElement;
+  new (): HTMLAmeEditElement;
+};
+declare global {
+  interface HTMLElementTagNameMap {
+      "ame-edit": HTMLAmeEditElement;
+  }
+  interface ElementTagNameMap {
+      "ame-edit": HTMLAmeEditElement;
+  }
+  namespace JSX {
+      interface IntrinsicElements {
+          "ame-edit": JSXElements.AmeEditAttributes;
+      }
+  }
+  namespace JSXElements {
+      export interface AmeEditAttributes extends HTMLAttributes {
+        
+      }
+  }
+}
+
 import { AmeText as AmeText } from './components/ame-text/ame-text';
 
 interface HTMLAmeTextElement extends AmeText, HTMLElement {
