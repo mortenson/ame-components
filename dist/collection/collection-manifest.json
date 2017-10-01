@@ -22,17 +22,20 @@
       ],
       "states": [
         {
-          "name": "editing"
+          "name": "editedText"
         }
       ],
-      "listeners": [
+      "methods": [
         {
-          "event": "click",
-          "method": "handleClick",
-          "passive": false,
-          "capture": false
+          "name": "revert"
+        },
+        {
+          "name": "value"
         }
-      ]
+      ],
+      "hostElement": {
+        "name": "element"
+      }
     }
   ],
   "bundles": [

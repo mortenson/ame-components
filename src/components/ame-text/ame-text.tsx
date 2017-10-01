@@ -1,4 +1,4 @@
-import { Component, Prop, State, Listen } from '@stencil/core';
+import { Component, Prop, State, Element, Method } from '@stencil/core';
 
 @Component({
   tag: 'ame-text',
@@ -6,22 +6,42 @@ import { Component, Prop, State, Listen } from '@stencil/core';
 })
 export class AmeText {
 
+  @Element() element: HTMLElement;
+
   @Prop() text: string;
 
   @Prop() editable: boolean;
 
-  @State() editing: boolean;
+  @State() editedText: string;
 
-  @Listen('click')
+  @Method()
+  revert() {
+    this.editedText = this.text;
+  }
+
+  @Method()
+  value() {
+    return this.editedText;
+  }
+
   handleClick(event: MouseEvent) {
-    if (this.editable && !this.editing) {
-      this.editing = true;
+    if (this.editable) {
+      let child = this.element.querySelector('span');
+      child.setAttribute('contenteditable', 'true');
+      child.focus();
+    }
+  }
+
+  handleBlur(event: FocusEvent) {
+    if (this.editable) {
+      this.editedText = this.element.querySelector('span').innerText;
     }
   }
 
   render() {
+    const text = this.editedText || this.text;
     return (
-      <span contenteditable={this.editing ? "true" : "false"}>{this.text}</span>
+      <span onClick={this.handleClick.bind(this)} onBlur={this.handleBlur.bind(this)}>{text}</span>
     );
   }
 
