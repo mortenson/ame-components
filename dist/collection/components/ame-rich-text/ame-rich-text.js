@@ -1,31 +1,28 @@
+import Quill from 'quill';
 var AmeRichText = /** @class */ (function () {
     function AmeRichText() {
     }
     AmeRichText.prototype.value = function () {
-        return this.getChild().innerText;
+        if (this.quill) {
+            return this.quill.root.innerHTML;
+        }
+        else {
+            return this.getChild().innerHTML;
+        }
+    };
+    AmeRichText.prototype.handleEditableChange = function (editable) {
+        if (!this.quill) {
+            this.quill = new Quill(this.getChild(), {
+                theme: 'bubble'
+            });
+        }
+        this.quill.enable(editable);
     };
     AmeRichText.prototype.getChild = function () {
         return this.element.querySelector('span');
     };
-    AmeRichText.prototype.handleClick = function (event) {
-        if (this.editable) {
-            var child = this.getChild();
-            child.setAttribute('contenteditable', 'true');
-            child.focus();
-        }
-    };
-    AmeRichText.prototype.handleBlur = function (event) {
-        if (this.editable) {
-            this.getChild().innerHTML = this.getChild().innerText;
-        }
-    };
-    AmeRichText.prototype.handleKeyDown = function (event) {
-        if (event.keyCode === 13) {
-            event.preventDefault();
-        }
-    };
     AmeRichText.prototype.render = function () {
-        return (h("span", { "o": { "click": this.handleClick.bind(this), "blur": this.handleBlur.bind(this), "keydown": this.handleKeyDown.bind(this) }, "a": { "contenteditable": this.editable ? 'true' : 'false' } },
+        return (h("span", 0,
             h(0, 0)));
     };
     return AmeRichText;

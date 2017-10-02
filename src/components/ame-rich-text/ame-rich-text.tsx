@@ -1,4 +1,5 @@
-import { Component, Prop, Element, Method } from '@stencil/core';
+import { Component, Prop, Element, Method, PropWillChange } from '@stencil/core';
+import Quill from 'quill';
 
 @Component({
   tag: 'ame-rich-text',
@@ -10,42 +11,35 @@ export class AmeRichText {
 
   @Prop() editable: boolean;
 
+  quill: Quill;
+
   @Method()
   value() {
-    return this.getChild().innerText;
+    if (this.quill) {
+      return this.quill.root.innerHTML;
+    }
+    else {
+      return this.getChild().innerHTML;
+    }
+  }
+
+  @PropWillChange('editable')
+  handleEditableChange(editable: boolean) {
+    if (!this.quill) {
+      this.quill = new Quill(this.getChild(), {
+        theme: 'bubble'
+      });
+    }
+    this.quill.enable(editable);
   }
 
   getChild() {
     return this.element.querySelector('span');
   }
 
-  handleClick(event: MouseEvent) {
-    if (this.editable) {
-      let child = this.getChild();
-      child.setAttribute('contenteditable', 'true');
-      child.focus();
-    }
-  }
-
-  handleBlur(event: FocusEvent) {
-    if (this.editable) {
-      this.getChild().innerHTML = this.getChild().innerText;
-    }
-  }
-
-  handleKeyDown(event: KeyboardEvent) {
-    if (event.keyCode === 13) {
-      event.preventDefault();
-    }
-  }
-
   render() {
     return (
-      <span contenteditable={this.editable ? 'true' : 'false'}
-            onClick={this.handleClick.bind(this)}
-            onBlur={this.handleBlur.bind(this)}
-            onKeyDown={this.handleKeyDown.bind(this)}
-      ><slot /></span>
+      <span><slot /></span>
     );
   }
 

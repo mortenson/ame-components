@@ -1,4 +1,6 @@
 
 ame-text {
-
+  [contenteditable]:focus {
+    outline: 0 solid transparent;
+  }
 }

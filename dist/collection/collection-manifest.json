@@ -42,6 +42,12 @@
           "type": "boolean"
         }
       ],
+      "propsWillChange": [
+        {
+          "name": "editable",
+          "method": "handleEditableChange"
+        }
+      ],
       "methods": [
         {
           "name": "value"
