@@ -60,6 +60,33 @@ declare global {
   }
 }
 
+import { AmeSave as AmeSave } from './components/ame-save/ame-save';
+
+interface HTMLAmeSaveElement extends AmeSave, HTMLElement {
+}
+declare var HTMLAmeSaveElement: {
+  prototype: HTMLAmeSaveElement;
+  new (): HTMLAmeSaveElement;
+};
+declare global {
+  interface HTMLElementTagNameMap {
+      "ame-save": HTMLAmeSaveElement;
+  }
+  interface ElementTagNameMap {
+      "ame-save": HTMLAmeSaveElement;
+  }
+  namespace JSX {
+      interface IntrinsicElements {
+          "ame-save": JSXElements.AmeSaveAttributes;
+      }
+  }
+  namespace JSXElements {
+      export interface AmeSaveAttributes extends HTMLAttributes {
+        
+      }
+  }
+}
+
 import { AmeText as AmeText } from './components/ame-text/ame-text';
 
 interface HTMLAmeTextElement extends AmeText, HTMLElement {

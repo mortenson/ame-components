@@ -1186,12 +1186,15 @@ ame-rich-text .ql-editor {
   line-height: inherit;
 }
 
+
+
 ame-text [contenteditable]:focus {
   outline: 0 solid transparent;
 }
 
 ame-edit.💎,
 ame-rich-text.💎,
+ame-save.💎,
 ame-text.💎 {
   visibility: inherit;
 }

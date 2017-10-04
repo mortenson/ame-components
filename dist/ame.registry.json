@@ -32,6 +32,20 @@
       1
     ],
     [
+      "AME-SAVE",
+      "ame-edit",
+      {
+        "$": "ame-edit"
+      },
+      0,
+      [
+        [
+          "click",
+          "handleClick"
+        ]
+      ]
+    ],
+    [
       "AME-TEXT",
       "ame-edit",
       {

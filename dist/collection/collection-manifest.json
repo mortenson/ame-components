@@ -59,6 +59,26 @@
       "slot": "hasSlots"
     },
     {
+      "tag": "ame-save",
+      "componentClass": "AmeSave",
+      "componentPath": "components/ame-save/ame-save.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/ame-save/ame-save.scss"
+          ]
+        }
+      },
+      "listeners": [
+        {
+          "event": "click",
+          "method": "handleClick",
+          "passive": false,
+          "capture": false
+        }
+      ]
+    },
+    {
       "tag": "ame-text",
       "componentClass": "AmeText",
       "componentPath": "components/ame-text/ame-text.js",
@@ -91,6 +111,7 @@
       "components": [
         "ame-edit",
         "ame-rich-text",
+        "ame-save",
         "ame-text"
       ]
     }
