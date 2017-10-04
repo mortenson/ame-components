@@ -76,6 +76,11 @@
           "passive": false,
           "capture": false
         }
+      ],
+      "events": [
+        {
+          "event": "saveReady"
+        }
       ]
     },
     {

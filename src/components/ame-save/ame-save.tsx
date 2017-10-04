@@ -1,4 +1,4 @@
-import { Component, Listen } from '@stencil/core';
+import { Component, Listen, Event, EventEmitter } from '@stencil/core';
 import { HTMLAmeElement } from '../../interfaces'
 
 @Component({
@@ -14,32 +14,34 @@ export class AmeSave {
       return object;
     }
     else if (!(key in object)) {
-      object[key] = [];
+      object[key] = {};
     }
     return this.setPathValue(object[key], path, value);
   }
 
   serializeComponentValues() {
-    let resources = [];
-    let elements = (document.body.querySelectorAll('[ame-resource]') as NodeListOf<HTMLAmeElement>);
+    let resources = {};
+    let elements = (document.body.querySelectorAll('[ame-resource][ame-path]') as NodeListOf<HTMLAmeElement>);
     for (let i = 0;i < elements.length; ++i) {
       if ('value' in elements[i] && typeof elements[i].value === 'function') {
-        let split = elements[i].getAttribute('ame-resource').split('/');
-        let path = split.pop();
-        let key = split.join('/');
+        let path = elements[i].getAttribute('ame-path');
+        let key = elements[i].getAttribute('ame-resource');
         if (!(key in resources)) {
-          resources[key] = [];
+          resources[key] = {};
         }
         this.setPathValue(resources[key], path.split('.'), elements[i].value());
       }
     }
-    console.log(resources);
+    return resources;
   }
 
   @Listen('click')
   handleClick(event: MouseEvent) {
-    this.serializeComponentValues();
+    let resources = this.serializeComponentValues();
+    this.saveReady.emit(resources);
   }
+
+  @Event() saveReady: EventEmitter;
 
   render() {
     return (

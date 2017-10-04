@@ -11375,28 +11375,28 @@ var AmeSave = /** @class */ (function () {
             return object;
         }
         else if (!(key in object)) {
-            object[key] = [];
+            object[key] = {};
         }
         return this.setPathValue(object[key], path, value);
     };
     AmeSave.prototype.serializeComponentValues = function () {
-        var resources = [];
-        var elements = document.body.querySelectorAll('[ame-resource]');
+        var resources = {};
+        var elements = document.body.querySelectorAll('[ame-resource][ame-path]');
         for (var i = 0; i < elements.length; ++i) {
             if ('value' in elements[i] && typeof elements[i].value === 'function') {
-                var split = elements[i].getAttribute('ame-resource').split('/');
-                var path = split.pop();
-                var key = split.join('/');
+                var path = elements[i].getAttribute('ame-path');
+                var key = elements[i].getAttribute('ame-resource');
                 if (!(key in resources)) {
-                    resources[key] = [];
+                    resources[key] = {};
                 }
                 this.setPathValue(resources[key], path.split('.'), elements[i].value());
             }
         }
-        console.log(resources);
+        return resources;
     };
     AmeSave.prototype.handleClick = function (event) {
-        this.serializeComponentValues();
+        var resources = this.serializeComponentValues();
+        this.saveReady.emit(resources);
     };
     AmeSave.prototype.render = function () {
         return (h("button", 0, t("Save")));
@@ -11497,7 +11497,15 @@ exports['AME-TEXT'] = AmeText;
 0 /* no members */,
 
 /** ame-save: host **/
-{}
+{},
+
+/** ame-save: events **/
+[
+  [
+    /*****  ame-save saveReady ***** /
+    /* event name ***/ "saveReady"
+  ]
+]
 
 ],
 
