@@ -29,4 +29,4 @@
     x.setAttribute('data-path', publicPath);
     x.setAttribute('data-core', appCore);
     document.head.appendChild(x);
-})(window, document, "ame","/build/ame/","ame.core.js","ame.core.pf.js",[["AME-EDIT","ame-edit",{"$":"ame-edit"},0,[["click","handleClick"]]],["AME-RICH-TEXT","ame-edit",{"$":"ame-edit"},[["editable",1,1]],0,1],["AME-SAVE","ame-edit",{"$":"ame-edit"},0,[["click","handleClick"]]],["AME-TEXT","ame-edit",{"$":"ame-edit"},[["editable",1,1]],0,1]]);
+})(window, document, "ame","/build/ame/","ame.core.js","ame.core.pf.js",[["AME-EDIT","ame-edit",{"$":"ame-edit"},0,[["click","handleClick"]]],["AME-HANDLER","ame-handler",{"$":"ame-handler"},[["handlerName",1]]],["AME-RICH-TEXT","ame-edit",{"$":"ame-edit"},[["editable",1,1]],0,1],["AME-SAVE","ame-edit",{"$":"ame-edit"},0,[["click","handleClick"]]],["AME-TEXT","ame-edit",{"$":"ame-edit"},[["editable",1,1]],0,1]]);

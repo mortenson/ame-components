@@ -26,6 +26,33 @@
       ]
     },
     {
+      "tag": "ame-handler",
+      "componentClass": "AmeHandler",
+      "componentPath": "components/ame-handler/ame-handler.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/ame-handler/ame-handler.scss"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "handlerName"
+        }
+      ],
+      "methods": [
+        {
+          "name": "save"
+        }
+      ],
+      "events": [
+        {
+          "event": "saveComplete"
+        }
+      ]
+    },
+    {
       "tag": "ame-rich-text",
       "componentClass": "AmeRichText",
       "componentPath": "components/ame-rich-text/ame-rich-text.js",
@@ -75,11 +102,6 @@
           "method": "handleClick",
           "passive": false,
           "capture": false
-        }
-      ],
-      "events": [
-        {
-          "event": "saveReady"
         }
       ]
     },

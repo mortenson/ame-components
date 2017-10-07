@@ -31,6 +31,35 @@ declare global {
   }
 }
 
+import { AmeHandler as AmeHandler } from './components/ame-handler/ame-handler';
+
+interface HTMLAmeHandlerElement extends AmeHandler, HTMLElement {
+}
+declare var HTMLAmeHandlerElement: {
+  prototype: HTMLAmeHandlerElement;
+  new (): HTMLAmeHandlerElement;
+};
+declare global {
+  interface HTMLElementTagNameMap {
+      "ame-handler": HTMLAmeHandlerElement;
+  }
+  interface ElementTagNameMap {
+      "ame-handler": HTMLAmeHandlerElement;
+  }
+  namespace JSX {
+      interface IntrinsicElements {
+          "ame-handler": JSXElements.AmeHandlerAttributes;
+      }
+  }
+  namespace JSXElements {
+      export interface AmeHandlerAttributes extends HTMLAttributes {
+        
+          save?: any,
+          handlerName?: any
+      }
+  }
+}
+
 import { AmeRichText as AmeRichText } from './components/ame-rich-text/ame-rich-text';
 
 interface HTMLAmeRichTextElement extends AmeRichText, HTMLElement {

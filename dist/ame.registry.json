@@ -16,6 +16,19 @@
       ]
     ],
     [
+      "AME-HANDLER",
+      "ame-handler",
+      {
+        "$": "ame-handler"
+      },
+      [
+        [
+          "handlerName",
+          1
+        ]
+      ]
+    ],
+    [
       "AME-RICH-TEXT",
       "ame-edit",
       {
