@@ -13,7 +13,8 @@
     "build": "stencil build",
     "dev": "sd concurrent \"stencil build --dev --watch\" \"stencil-dev-server\" ",
     "serve": "stencil-dev-server",
-    "start": "npm run dev"
+    "start": "npm run dev",
+    "prepare": "npm run build"
   },
   "dependencies": {
     "@stencil/core": "0.0.6-11",
