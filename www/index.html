@@ -14,36 +14,58 @@
     .header {
       text-align: center;
     }
+    .header img {
+      height: 150px;
+    }
+    .header h1 {
+      font-weight: 100;
+    }
     .component-demo {
       background: white;
       padding: 20px 30px 20px 30px;
       border-left: none;
       border-right: none;
     }
+    .component-demo pre {
+      overflow: scroll;
+    }
     .components {
       max-width: 600px;
       margin: 0 auto;
     }
     .component {
-      background: #2ca7d8;;
+      background: #23b3ec;;
       padding: 20px;
       margin-bottom: 10px;
     }
     .component > h2 {
       margin-top: 0;
     }
-    .component > h2,
-    .component > p {
+    .component > h3 {
+      margin-bottom: 0;
+    }
+    .component > *:not(.component-demo) {
       font-weight: normal;
       color: white;
+    }
+    .attributes {
+      list-style: none;
+      font-size: 14px;
+      padding-left: 20px;
+    }
+    .attributes li:not(:last-child) {
+      margin-bottom: 10px;
+    }
+    .attributes p {
+      margin: 5px 0 0 20px;
     }
   </style>
 </head>
   <body>
     <div class="header">
       <img src="logo.svg">
-      <h1>Ame Components</h1>
-      <p>This collection contains re-usable components that fully support inline editing.</p>
+      <h1>ame-components</h1>
+      <p>A collection of re-usable components that fully support inline editing.</p>
     </div>
     <div class="components">
       <div class="component">
@@ -57,15 +79,23 @@
         <h2>&lt;ame-text&gt;</h2>
         <p>A plan text element that can be edited inline.</p>
         <div class="component-demo">
-          <ame-text ame-handler="example" ame-resource="node/1" ame-path="field_text.value">If editing is enabled, click me!</ame-text>
+          <ame-text ame-handler="base" ame-resource="node/1" ame-path="field_text.value">If editing is enabled, click me!</ame-text>
         </div>
       </div>
       <div class="component">
         <h2>&lt;ame-rich-text&gt;</h2>
         <p>A rich text element that can be edited inline.</p>
         <div class="component-demo">
-          <ame-rich-text ame-handler="example" ame-resource="node/1" ame-path="field_rich_text.value">I can handle <b>rich text</b></ame-rich-text>
+          <ame-rich-text ame-handler="base" ame-resource="node/1" ame-path="field_rich_text.value">I can handle <b>rich text</b></ame-rich-text>
         </div>
+      </div>
+      <div class="component">
+        <h2>&lt;ame-value&gt;</h2>
+        <p>An element representing a raw value.</p>
+        <h3>Attributes</h3>
+        <ul class="attributes">
+          <li><strong>return</strong><p>The raw value that should be returned.</p></li>
+        </ul>
       </div>
       <div class="component">
         <h2>&lt;ame-save&gt;</h2>
@@ -77,17 +107,36 @@
       <div class="component">
         <h2>&lt;ame-handler&gt;</h2>
         <p>A base element that knows how to handle saved data.</p>
+        <h3>Attributes</h3>
+        <ul class="attributes">
+          <li><strong>handler-name</strong><p>A string that identifies this handler. Ame elements can link themselves to this name by using the <i>ame-handler</i> attribute.</p></li>
+        </ul>
         <div class="component-demo">
-          <ame-handler handler-name="example"></ame-handler>
+          <ame-handler handler-name="base"></ame-handler>
           <pre id="ame-save-result">Click save above to see results.</pre>
         </div>
       </div>
+      <div class="component">
+        <h2>&lt;ame-rest-handler&gt;</h2>
+        <p>A handler that knows how to save data to Drupal REST.</p>
+        <h3>Attributes</h3>
+        <ul class="attributes">
+          <li><strong>handler-name</strong><p>A string that identifies this handler. Ame elements can link themselves to this name by using the <i>ame-handler</i> attribute.</p></li>
+          <li><strong>base-url</strong><p>The base URL of the REST endpoint.</p></li>
+        </ul>
+      </div>
     </div>
     <script>
-      var handler = document.querySelector('ame-handler[handler-name="example"]');
+      var handler = document.querySelector('ame-handler[handler-name="base"]');
       handler.addEventListener('saveComplete', function (event) {
-        document.getElementById('ame-save-result').innerText = "// Serialized output ready for PATCH\n";
-        document.getElementById('ame-save-result').innerText +=  JSON.stringify(event.detail, null, 2);
+        var result = document.getElementById('ame-save-result');
+        if (Object.keys(event.detail).length) {
+          result.innerText = "// Serialized output ready for PATCH:\n";
+          result.innerText += JSON.stringify(event.detail, null, 2);
+        }
+        else {
+          result.innerText = "The handler didn't get any data. Try editing and click save again.";
+        }
       });
     </script>
   </body>

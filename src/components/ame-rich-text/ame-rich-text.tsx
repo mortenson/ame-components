@@ -9,9 +9,11 @@ export class AmeRichText {
 
   @Element() element: HTMLElement;
 
-  @Prop() editable: boolean;
+  @Prop() editable: boolean = false;
 
   quill: Quill;
+
+  isChanged: boolean = false;
 
   @Method()
   value() {
@@ -23,11 +25,19 @@ export class AmeRichText {
     }
   }
 
+  @Method()
+  changed() {
+    return this.isChanged;
+  }
+
   @PropWillChange('editable')
   handleEditableChange(editable: boolean) {
     if (!this.quill) {
       this.quill = new Quill(this.getChild(), {
         theme: 'bubble'
+      });
+      this.quill.on('text-change', () => {
+        this.isChanged = true;
       });
     }
     this.quill.enable(editable);

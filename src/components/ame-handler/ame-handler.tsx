@@ -30,16 +30,27 @@ export class AmeHandler {
   }
 
   prepareResources() {
+    if (!this.handlerName) {
+      return {};
+    }
     let resources = {};
     let selector = '[ame-resource][ame-path][ame-handler="'+this.handlerName+'"]';
     let elements = (document.body.querySelectorAll(selector) as NodeListOf<HTMLAmeElement>);
     for (let i = 0;i < elements.length; ++i) {
-      if ('value' in elements[i] && typeof elements[i].value === 'function') {
+      if (elements[i].tagName !== 'AME-VALUE' && elements[i].changed()) {
         let path = elements[i].getAttribute('ame-path');
         let key = elements[i].getAttribute('ame-resource');
         if (!(key in resources)) {
           resources[key] = {};
         }
+        this.setPathValue(resources[key], path.split('.'), elements[i].value());
+      }
+    }
+    for (let key in resources) {
+      let selector = 'ame-value[ame-resource="'+key+'"][ame-handler="'+this.handlerName+'"]';
+      let elements = (document.body.querySelectorAll(selector) as NodeListOf<HTMLAmeElement>);
+      for (let i = 0;i < elements.length;++i) {
+        let path = elements[i].getAttribute('ame-path');
         this.setPathValue(resources[key], path.split('.'), elements[i].value());
       }
     }

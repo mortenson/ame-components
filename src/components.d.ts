@@ -60,6 +60,36 @@ declare global {
   }
 }
 
+import { AmeRestHandler as AmeRestHandler } from './components/ame-rest-handler/ame-rest-handler';
+
+interface HTMLAmeRestHandlerElement extends AmeRestHandler, HTMLElement {
+}
+declare var HTMLAmeRestHandlerElement: {
+  prototype: HTMLAmeRestHandlerElement;
+  new (): HTMLAmeRestHandlerElement;
+};
+declare global {
+  interface HTMLElementTagNameMap {
+      "ame-rest-handler": HTMLAmeRestHandlerElement;
+  }
+  interface ElementTagNameMap {
+      "ame-rest-handler": HTMLAmeRestHandlerElement;
+  }
+  namespace JSX {
+      interface IntrinsicElements {
+          "ame-rest-handler": JSXElements.AmeRestHandlerAttributes;
+      }
+  }
+  namespace JSXElements {
+      export interface AmeRestHandlerAttributes extends HTMLAttributes {
+        
+          save?: any,
+          handlerName?: any,
+          baseUrl?: any
+      }
+  }
+}
+
 import { AmeRichText as AmeRichText } from './components/ame-rich-text/ame-rich-text';
 
 interface HTMLAmeRichTextElement extends AmeRichText, HTMLElement {
@@ -84,6 +114,7 @@ declare global {
       export interface AmeRichTextAttributes extends HTMLAttributes {
         
           value?: any,
+          changed?: any,
           editable?: boolean | "true" | "false"
       }
   }
@@ -140,7 +171,37 @@ declare global {
       export interface AmeTextAttributes extends HTMLAttributes {
         
           value?: any,
+          changed?: any,
           editable?: boolean | "true" | "false"
+      }
+  }
+}
+
+import { AmeValue as AmeValue } from './components/ame-value/ame-value';
+
+interface HTMLAmeValueElement extends AmeValue, HTMLElement {
+}
+declare var HTMLAmeValueElement: {
+  prototype: HTMLAmeValueElement;
+  new (): HTMLAmeValueElement;
+};
+declare global {
+  interface HTMLElementTagNameMap {
+      "ame-value": HTMLAmeValueElement;
+  }
+  interface ElementTagNameMap {
+      "ame-value": HTMLAmeValueElement;
+  }
+  namespace JSX {
+      interface IntrinsicElements {
+          "ame-value": JSXElements.AmeValueAttributes;
+      }
+  }
+  namespace JSXElements {
+      export interface AmeValueAttributes extends HTMLAttributes {
+        
+          value?: any,
+          return?: any
       }
   }
 }

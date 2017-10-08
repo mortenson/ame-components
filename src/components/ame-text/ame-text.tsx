@@ -8,11 +8,18 @@ export class AmeText {
 
   @Element() element: HTMLElement;
 
-  @Prop() editable: boolean;
+  @Prop() editable: boolean = false;
+
+  isChanged: boolean = false;
 
   @Method()
   value() {
     return this.getChild().innerText;
+  }
+
+  @Method()
+  changed() {
+    return this.isChanged;
   }
 
   getChild() {
@@ -37,6 +44,7 @@ export class AmeText {
     if (event.keyCode === 13) {
       event.preventDefault();
     }
+    this.isChanged = true;
   }
 
   render() {
