@@ -44,10 +44,16 @@ export class AmeHandler {
           resources[key] = {};
         }
         this.setPathValue(resources[key], path.split('.'), elements[i].value());
+        let selector = 'ame-value[ame-resource="'+key+'"][ame-handler="'+this.handlerName+'"][ame-include-with="'+path+'"]';
+        let values = (document.body.querySelectorAll(selector) as NodeListOf<HTMLAmeElement>);
+        for (let j = 0;j < values.length;++j) {
+          let value_path = values[j].getAttribute('ame-path');
+          this.setPathValue(resources[key], value_path.split('.'), values[j].value());
+        }
       }
     }
     for (let key in resources) {
-      let selector = 'ame-value[ame-resource="'+key+'"][ame-handler="'+this.handlerName+'"]';
+      let selector = 'ame-value[ame-resource="'+key+'"][ame-handler="'+this.handlerName+'"][ame-always-include]';
       let elements = (document.body.querySelectorAll(selector) as NodeListOf<HTMLAmeElement>);
       for (let i = 0;i < elements.length;++i) {
         let path = elements[i].getAttribute('ame-path');
