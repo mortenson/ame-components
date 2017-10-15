@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+  <title>Ame Components</title>
+  <script src="/ame-components/build/ame.js"></script>
+  <link rel="stylesheet" href="/ame-components/styles.css">
+  <link rel="icon" type="image/x-icon" href="/ame-components/assets/icon/favicon.ico">
+</head>
+  <body>
+    <div class="navigation">
+      <a href=""><img src="/ame-components/logo.svg" class="logo"></a>
+      <strong>Topics</strong>
+      <ul>
+        <li><a href="/ame-components/handlers.html">Handlers</a></li>
+      </ul>
+    </div>
+    <div class="content">
+      <div class="header">
+        <h1>ame-components</h1>
+        <p>A collection of re-usable components that fully support inline editing.</p>
+      </div>
+      <div class="components">
+        <div class="component">
+          <h2>&lt;ame-edit&gt;</h2>
+          <p>A button that toggles editing for the page.</p>
+          <div class="component-demo">
+            <ame-edit></ame-edit>
+          </div>
+        </div>
+        <div class="component">
+          <h2>&lt;ame-text&gt;</h2>
+          <p>A plan text element that can be edited inline.</p>
+          <div class="component-demo">
+            <ame-text ame-handler="base" ame-resource="node/1" ame-path="field_text.value">If editing is enabled, click me!</ame-text>
+          </div>
+        </div>
+        <div class="component">
+          <h2>&lt;ame-rich-text&gt;</h2>
+          <p>A rich text element that can be edited inline.</p>
+          <div class="component-demo">
+            <ame-rich-text ame-handler="base" ame-resource="node/1" ame-path="field_rich_text.value">I can handle <b>rich text</b></ame-rich-text>
+          </div>
+        </div>
+        <div class="component">
+          <h2>&lt;ame-value&gt;</h2>
+          <p>An element representing a raw value.</p>
+          <h3>Attributes</h3>
+          <ul class="attributes">
+            <li><strong>return</strong><p>The raw value that should be returned.</p></li>
+          </ul>
+        </div>
+        <div class="component">
+          <h2>&lt;ame-save&gt;</h2>
+          <p>A button that triggers a save on any handler on the page.</p>
+          <div class="component-demo">
+            <ame-save></ame-save>
+          </div>
+        </div>
+        <div class="component">
+          <h2>&lt;ame-handler&gt;</h2>
+          <p>A base element that knows how to handle saved data.</p>
+          <h3>Attributes</h3>
+          <ul class="attributes">
+            <li><strong>handler-name</strong><p>A string that identifies this handler. Ame elements can link themselves to this name by using the <i>ame-handler</i> attribute.</p></li>
+          </ul>
+          <div class="component-demo">
+            <ame-handler handler-name="base"></ame-handler>
+            <pre id="ame-save-result">Click save above to see results.</pre>
+          </div>
+        </div>
+        <div class="component">
+          <h2>&lt;ame-rest-handler&gt;</h2>
+          <p>A handler that knows how to save data to Drupal REST.</p>
+          <h3>Attributes</h3>
+          <ul class="attributes">
+            <li><strong>handler-name</strong><p>A string that identifies this handler. Ame elements can link themselves to this name by using the <i>ame-handler</i> attribute.</p></li>
+            <li><strong>base-url</strong><p>The base URL of the REST endpoint.</p></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <script>
+      var handler = document.querySelector('ame-handler[handler-name="base"]');
+      handler.addEventListener('saveComplete', function (event) {
+        var result = document.getElementById('ame-save-result');
+        if (Object.keys(event.detail).length) {
+          result.innerText = "// Serialized output ready for PATCH:\n";
+          result.innerText += JSON.stringify(event.detail, null, 2);
+        }
+        else {
+          result.innerText = "The handler didn't get any data. Try editing and click save again.";
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,111 @@
+{
+  "namespace": "ame",
+  "components": [
+    [
+      "AME-EDIT",
+      "ame-edit",
+      {
+        "$": "ame-edit"
+      },
+      0,
+      [
+        [
+          "click",
+          "handleClick"
+        ]
+      ]
+    ],
+    [
+      "AME-HANDLER",
+      "ame-edit",
+      {
+        "$": "ame-edit"
+      },
+      [
+        [
+          "handlerName",
+          1
+        ]
+      ]
+    ],
+    [
+      "AME-REST-HANDLER",
+      "ame-edit",
+      {
+        "$": "ame-edit"
+      },
+      [
+        [
+          "baseUrl",
+          1
+        ],
+        [
+          "handlerName",
+          1
+        ]
+      ]
+    ],
+    [
+      "AME-RICH-TEXT",
+      "ame-edit",
+      {
+        "$": "ame-edit"
+      },
+      [
+        [
+          "editable",
+          1,
+          1
+        ]
+      ],
+      0,
+      1
+    ],
+    [
+      "AME-SAVE",
+      "ame-edit",
+      {
+        "$": "ame-edit"
+      },
+      0,
+      [
+        [
+          "click",
+          "handleClick"
+        ]
+      ]
+    ],
+    [
+      "AME-TEXT",
+      "ame-edit",
+      {
+        "$": "ame-edit"
+      },
+      [
+        [
+          "editable",
+          1,
+          1
+        ]
+      ],
+      0,
+      1
+    ],
+    [
+      "AME-VALUE",
+      "ame-edit",
+      {
+        "$": "ame-edit"
+      },
+      [
+        [
+          "return",
+          1
+        ]
+      ]
+    ]
+  ],
+  "loader": "ame.js",
+  "core": "ame/ame.core.js",
+  "corePolyfilled": "ame/ame.core.pf.js"
+}
