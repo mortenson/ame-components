@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+  <title>Ame Components</title>
+  <script src="/build/ame.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/x-icon" href="/assets/icon/favicon.ico">
+  <link rel="stylesheet"
+        href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/vs2015.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+  <div class="navigation">
+    <a href="/"><img src="logo.svg" class="logo"></a>
+    <strong>Topics</strong>
+    <ul>
+      <li><a href="handlers.html"><u>Handlers</u></a></li>
+    </ul>
+  </div>
+  <div class="content">
+    <div class="header">
+      <h1>Handlers</h1>
+      <p>
+        The handler components that Ame provides are responsible for the
+        serialization, validation, and saving of edits made inline.
+      </p>
+      <p>
+        Handlers are designed to be generic, and should be compatible with
+        any JSON based API that can handle cross-origin requests.
+      </p>
+    </div>
+    <div class="main">
+      <h2 id="formatting">Formatting your markup</h2>
+      <p>
+        In order to serialize the current HTML document as something that can
+        be saved to an API (JSON), Ame requires certain attributes on elements
+        which provide metadata about data they represent.
+      </p>
+      <p>
+        These attributes are:
+        <ul class="attributes">
+          <li>
+            <strong>ame-handler</strong>
+            <p>
+              The name of the handler. A page may contain multiple handlers
+              for different APIs, which is why this is required.
+            </p>
+          </li>
+          <li>
+            <strong>ame-resource</strong>
+            <p>
+              The name of the resource that this data is related to. A resource
+              usually relates to a specific API path, like /node/1. In a more
+              complex setup this could be more abstract, like a UUID that
+              relates to metadata about a resource (which could contain a
+              label, multiple paths, permissions, etc).
+            </p>
+          </li>
+          <li>
+            <strong>ame-path</strong>
+            <p>
+              A path which represents where the value from this element should
+              be placed in the serialized JSON. Each dot in the path is a new
+              nesting level. For example, a path of foo.bar.baz with a value of
+              "Hello, world" would serialize to:
+              <pre>
+                <code class="json">
+{
+  "foo": {
+    "bar": {
+      "baz": "Hello, world"
+    }
+  }
+}
+                </code>
+              </pre>
+            </p>
+          </li>
+        </ul>
+      </p>
+      <p>
+        Let's use this document tree as an example:
+        <pre>
+          <code class="html">
+&lt;ame-text ame-handler="example" ame-resource="/node/1" ame-path="title.0.value"&gt;My title&lt;/ame-text&gt;
+&lt;ame-rich-text ame-handler="example" ame-resource="/node/1" ame-path="body.0.value"&gt;Lorem ipsum!&lt;/ame-rich-text&gt;
+&lt;ame-value ame-handler="example" ame-resource="/node/1" ame-path="body.0.format" return="basic_html"&gt;&lt;/ame-value&gt;
+          </code>
+        </pre>
+        When serialized by the handler, the resulting JSON should be:
+        <pre>
+          <code class="json">
+{
+  "title": {
+    "0": {
+      "value": "My title"
+    }
+  }
+  "body": {
+    "0": {
+      "value": "Lorem ipsum!",
+      "format": "basic_html"
+    }
+  }
+}
+          </code>
+        </pre>
+        You'll notice that in this example, the ame-value element is used so
+        that the value "basic_html" maps to "body.0.format". The format cannot
+        be changed inline, but we want to make sure that it's always included
+        in the resulting JSON. Structures like this are verbose, but allow
+        ame-components to stay generic and not be tied to a single system like
+        Drupal.
+      </p>
+      <h2 id="other-editors">Using other inline editors</h2>
+      <p>
+        Some users may want to use Ame handlers without using inline editing
+        components like ame-text and ame-rich-text, and that's totally fine.
+        The handlers are built in a way that supports any HTML element,
+        including form elements.
+      </p>
+      <p>
+        This means that this tree should serialize to the same JSON above:
+        <pre>
+          <code class="html">
+&lt;h1 ame-handler="example" ame-resource="/node/1" ame-path="title.0.value" contenteditable="true"&gt;My title&lt;/h1&gt;
+&lt;textarea ame-handler="example" ame-resource="/node/1" ame-path="body.0.value"&gt;Lorem ipsum!&lt;/textarea&gt;
+&lt;span ame-handler="example" ame-resource="/node/1" ame-path="body.0.format" style="display:none;"&gt;basic_html&lt;/span&gt;
+          </code>
+        </pre>
+        Handlers are smart enough to use "innerHTML" for some elements
+        (h1, span) "value" for others (textarea).
+      </p>
+      <h2 id="saving">Saving data</h2>
+      <p>
+        Every handler included with Ame exposes a "save" method, which should
+        serialize the document tree, show validation errors, and send something
+        like a PATCH request to the target API.
+      </p>
+      <p>
+        It's important to note that only <i>changed</i> resources will be saved
+        when the save method is called. This is determined by serializing the
+        document when the handler is placed on a page, storing that data, then
+        comparing it to the current serialized document.
+      </p>
+      <h2 id="validating">Validating data</h2>
+      <p>
+        Client side validation should be handled at the component (ame-text)
+        level, but handlers are responsible for showing validation errors
+        sent by the server back to the client. No validation has been
+        implemented for the Drupal (ame-rest-handler) element, yet.
+      </p>
+      <h2 id="potential">Potential for handlers</h2>
+      <p>
+        The nature of how handlers work allows for data from multiple APIs
+        to be represented and edited on the same page, which is really
+        exciting. A frontend application could aggregate data from multiple
+        sources (Drupal, Wordpress, Shopify) and allow editors to make
+        quick changes without visiting multiple sites.
+      </p>
+      <p>
+        This is probably not the 80% use case for Ame, but enabling it could
+        lead to some interesting implementations.
+      </p>
+    </div>
+  </div>
+</body>

@@ -1,0 +1,87 @@
+body {
+  display: flex;
+  font-family: Helvetica, Arial, sans-serif;
+  max-width: 1080px;
+  margin: auto;
+  padding: 30px;
+}
+.header {
+  margin-bottom: 40px;
+}
+h1,h2 {
+  font-weight: 100;
+}
+.content {
+  margin-left: 50px;
+  overflow: scroll;
+}
+.navigation .logo {
+  height: 150px;
+  display: block;
+  margin-bottom: 30px;
+}
+.navigation ul {
+  list-style: none;
+  padding-left: 0;
+}
+.navigation li {
+  display: inline-block;
+}
+.navigation a {
+  color: black;
+  text-decoration: none;
+  font-weight: lighter;
+}
+.navigation a:hover {
+  text-decoration: underline;
+}
+.component-demo {
+  background: white;
+  padding: 20px 30px 20px 30px;
+  border-left: none;
+  border-right: none;
+}
+pre {
+  overflow: scroll;
+}
+.components {
+}
+.component {
+  background: #2fa4d9;
+  padding: 20px;
+  margin-bottom: 20px;
+  max-width: 600px;
+}
+.component > h2 {
+  margin-top: 0;
+}
+.component > h3 {
+  margin-bottom: 0;
+}
+.component > *:not(.component-demo) {
+  font-weight: normal;
+  color: white;
+}
+.attributes {
+  list-style: none;
+  font-size: 14px;
+  padding-left: 20px;
+}
+.attributes li:not(:last-child) {
+  margin-bottom: 10px;
+}
+.attributes p {
+  margin: 5px 0 0 20px;
+}
+@media (max-width: 900px) {
+  body {
+    flex-wrap: wrap;
+  }
+  .navigation,
+  .content {
+    margin-left: 0;
+  }
+  .content {
+    padding-top: 0;
+  }
+}
