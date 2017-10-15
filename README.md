@@ -2,7 +2,7 @@
 
 Web components for the Ame Drupal distribution.
 
-More docs will be coming soon, I swear!
+Documentation can be found at https://mortenson.coffee/ame-components
 
 # Setup
 
