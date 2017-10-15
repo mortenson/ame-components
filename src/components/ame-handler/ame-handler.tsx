@@ -11,10 +11,55 @@ export class AmeHandler {
 
   @Event() saveComplete: EventEmitter;
 
+  lastResources: Object = {};
+
   @Method()
   save() {
-    let resources = this.prepareResources();
-    this.saveComplete.emit(resources);
+    this.getChangedResources().then((resources) => {
+      for (let key in resources) {
+        this.lastResources[key] = resources[key];
+      }
+      this.saveComplete.emit(resources);
+    });
+  }
+
+  componentDidLoad() {
+    this.getResources().then((resources) => {
+      this.lastResources = resources;
+    });
+  }
+
+  sortObject(object) {
+    let sorted = {};
+    let keys = Object.keys(object).sort();
+
+    for (let index in keys) {
+      let key = keys[index];
+      if (typeof object[key] == 'object' && !(object[key] instanceof Array)) {
+        sorted[key] = this.sortObject(object[key]);
+      }
+      else {
+        sorted[key] = object[key];
+      }
+    }
+
+    return sorted;
+  }
+
+  objectsMatch(object1, object2) {
+    return JSON.stringify(this.sortObject(object1)) == JSON.stringify(this.sortObject(object2));
+  }
+
+  getChangedResources() {
+    return this.getResources().then((resources) => {
+      let changed = {};
+      for (let key in resources) {
+        if (!(key in this.lastResources) || !this.objectsMatch(resources[key], this.lastResources[key])) {
+          changed[key] = resources[key];
+        }
+      }
+      return changed;
+    });
   }
 
   setPathValue(object: Object, path: Array<string>, value: any) {
@@ -29,38 +74,49 @@ export class AmeHandler {
     return this.setPathValue(object[key], path, value);
   }
 
-  prepareResources() {
+  getElementValue(element: HTMLAmeElement) {
+    if ('value' in element) {
+      if (typeof element.value == 'function') {
+        return element.value();
+      }
+      else {
+        return element.value;
+      }
+    }
+    return element.innerHTML;
+  }
+
+  elementIsReady(element) {
+    if ('componentOnReady' in element) {
+      return element.componentOnReady().then((component) => {
+        return component;
+      });
+    }
+    return Promise.resolve(element);
+  }
+
+  getResources() {
     if (!this.handlerName) {
-      return {};
+      return Promise.resolve({});
     }
-    let resources = {};
+    let resources = {}, promises = [];
     let selector = '[ame-resource][ame-path][ame-handler="'+this.handlerName+'"]';
-    let elements = (document.body.querySelectorAll(selector) as NodeListOf<HTMLAmeElement>);
+    let elements = (document.body.querySelectorAll(selector)as NodeListOf<HTMLAmeElement>);
     for (let i = 0;i < elements.length; ++i) {
-      if (elements[i].tagName !== 'AME-VALUE' && elements[i].changed()) {
-        let path = elements[i].getAttribute('ame-path');
-        let key = elements[i].getAttribute('ame-resource');
-        if (!(key in resources)) {
-          resources[key] = {};
-        }
-        this.setPathValue(resources[key], path.split('.'), elements[i].value());
-        let selector = 'ame-value[ame-resource="'+key+'"][ame-handler="'+this.handlerName+'"][ame-include-with="'+path+'"]';
-        let values = (document.body.querySelectorAll(selector) as NodeListOf<HTMLAmeElement>);
-        for (let j = 0;j < values.length;++j) {
-          let value_path = values[j].getAttribute('ame-path');
-          this.setPathValue(resources[key], value_path.split('.'), values[j].value());
-        }
+      let path = elements[i].getAttribute('ame-path');
+      let key = elements[i].getAttribute('ame-resource');
+      if (!(key in resources)) {
+        resources[key] = {};
       }
+      let promise = this.elementIsReady(elements[i]);
+      promise.then((element) => {
+        this.setPathValue(resources[key], path.split('.'), this.getElementValue(element));
+      });
+      promises.push(promise);
     }
-    for (let key in resources) {
-      let selector = 'ame-value[ame-resource="'+key+'"][ame-handler="'+this.handlerName+'"][ame-always-include]';
-      let elements = (document.body.querySelectorAll(selector) as NodeListOf<HTMLAmeElement>);
-      for (let i = 0;i < elements.length;++i) {
-        let path = elements[i].getAttribute('ame-path');
-        this.setPathValue(resources[key], path.split('.'), elements[i].value());
-      }
-    }
-    return resources;
+    return Promise.all(promises).then(() => {
+      return resources;
+    });
   }
 
   render() {

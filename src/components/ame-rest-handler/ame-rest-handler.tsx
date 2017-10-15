@@ -20,26 +20,28 @@ export class AmeRestHandler extends AmeHandler {
   @Method()
   save() {
     if (this.baseUrl) {
-      let resources = this.prepareResources();
-      for (let i in resources) {
-        let tokenRequest = new XMLHttpRequest();
-        tokenRequest.open('GET', this.getUrl('/rest/session/token'));
-        tokenRequest.addEventListener('load', () => {
-          if (tokenRequest.status === 200) {
-            let patchRequest = new XMLHttpRequest();
-            patchRequest.open('PATCH', this.getUrl(i));
-            patchRequest.setRequestHeader('X-CSRF-Token', tokenRequest.responseText);
-            patchRequest.setRequestHeader('Content-Type', 'application/json');
-            patchRequest.setRequestHeader('Accept', 'application/json');
-            patchRequest.addEventListener('load', () => {
-              console.log(patchRequest);
-            });
-            patchRequest.send(JSON.stringify(resources[i]));
-          }
-        });
-        tokenRequest.send();
-      }
-      //this.saveComplete.emit(resources);
+      this.getChangedResources().then((resources) => {
+        for (let key in resources) {
+          this.lastResources[key] = resources[key];
+          let tokenRequest = new XMLHttpRequest();
+          tokenRequest.open('GET', this.getUrl('/rest/session/token'));
+          tokenRequest.addEventListener('load', () => {
+            if (tokenRequest.status === 200) {
+              let patchRequest = new XMLHttpRequest();
+              patchRequest.open('PATCH', this.getUrl(key));
+              patchRequest.setRequestHeader('X-CSRF-Token', tokenRequest.responseText);
+              patchRequest.setRequestHeader('Content-Type', 'application/json');
+              patchRequest.setRequestHeader('Accept', 'application/json');
+              patchRequest.addEventListener('load', () => {
+                console.log(patchRequest);
+              });
+              patchRequest.send(JSON.stringify(resources[key]));
+              this.saveComplete.emit(resources);
+            }
+          });
+          tokenRequest.send();
+        }
+      });
     }
   }
 

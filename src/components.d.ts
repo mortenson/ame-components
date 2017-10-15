@@ -114,7 +114,6 @@ declare global {
       export interface AmeRichTextAttributes extends HTMLAttributes {
         
           value?: any,
-          changed?: any,
           editable?: boolean | "true" | "false"
       }
   }
@@ -171,7 +170,6 @@ declare global {
       export interface AmeTextAttributes extends HTMLAttributes {
         
           value?: any,
-          changed?: any,
           editable?: boolean | "true" | "false"
       }
   }

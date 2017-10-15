@@ -2,7 +2,7 @@ export interface HTMLAmeElement extends HTMLElement {
 
   value: Function;
 
-  changed: Function;
+  componentOnReady: Function;
 
 }
 

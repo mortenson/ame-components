@@ -13,8 +13,6 @@ export class AmeRichText {
 
   quill: Quill;
 
-  isChanged: boolean = false;
-
   @Method()
   value() {
     if (this.quill) {
@@ -25,19 +23,11 @@ export class AmeRichText {
     }
   }
 
-  @Method()
-  changed() {
-    return this.isChanged;
-  }
-
   @PropWillChange('editable')
   handleEditableChange(editable: boolean) {
     if (!this.quill) {
       this.quill = new Quill(this.getChild(), {
         theme: 'bubble'
-      });
-      this.quill.on('text-change', () => {
-        this.isChanged = true;
       });
     }
     this.quill.enable(editable);
