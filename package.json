@@ -14,7 +14,8 @@
     "dev": "sd concurrent \"stencil build --dev --watch\" \"stencil-dev-server\" ",
     "serve": "stencil-dev-server",
     "start": "npm run dev",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "publish-docs": "node docs.js",
   },
   "dependencies": {
     "@stencil/core": "0.0.6-11",
@@ -23,7 +24,9 @@
   },
   "devDependencies": {
     "@stencil/dev-server": "latest",
-    "@stencil/utils": "latest"
+    "@stencil/utils": "latest",
+    "gh-pages": "^1.0.0",
+    "rebase": "^0.3.0"
   },
   "repository": {
     "type": "git",
